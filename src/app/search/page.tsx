@@ -7,8 +7,8 @@ import { getQueryClient } from "@/lib/query-client";
 
 function SearchMessage({ title, message }: { title: string; message: string }) {
 	return (
-		<section className="flex flex-col gap-4 border rounded-2xl p-8">
-			<h1 className="font-semibold text-2xl">{title}</h1>
+		<section className="flex flex-col gap-4 border rounded-2xl p-4 sm:p-8">
+			<h1 className="font-semibold text-xl sm:text-2xl">{title}</h1>
 			<p className="text-sm text-muted-foreground">{message}</p>
 		</section>
 	);

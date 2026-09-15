@@ -17,9 +17,9 @@ export function MovieSection({
 	loadMoreHref,
 }: MovieSectionProps) {
 	return (
-		<section className="flex flex-col gap-4 border rounded-2xl p-8">
-			<div className="flex justify-between items-center">
-				<h1 className="font-semibold text-2xl">{title}</h1>
+		<section className="flex flex-col gap-4 border rounded-2xl p-4 sm:p-8">
+			<div className="flex justify-between items-center gap-3">
+				<h1 className="font-semibold text-xl sm:text-2xl">{title}</h1>
 				{loadMoreHref && (
 					<div className="flex justify-center pt-4">
 						<Link

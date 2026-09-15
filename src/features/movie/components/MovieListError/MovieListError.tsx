@@ -22,7 +22,7 @@ function RetryButton({ onRetry }: { onRetry: () => void }) {
 
 function MovieListErrorFallback(_props: object, { reset }: ErrorInfo) {
 	return (
-		<div className="flex items-center gap-3">
+		<div className="flex flex-wrap items-center gap-3">
 			<p className="text-sm text-muted-foreground">
 				Failed to load movies. Please try again later.
 			</p>

@@ -38,12 +38,16 @@ export function SearchMovieFormFields({
 	};
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} noValidate className="relative">
-			<ButtonGroup>
+		<form
+			onSubmit={handleSubmit(onSubmit)}
+			noValidate
+			className="relative flex-1 sm:flex-none"
+		>
+			<ButtonGroup className="w-full">
 				<Input
 					type="search"
 					placeholder="Type to search a movie by title..."
-					className="w-[300px]"
+					className="w-full sm:w-75"
 					{...register("query")}
 				/>
 				<Button type="submit" variant="outline" aria-label="Search">

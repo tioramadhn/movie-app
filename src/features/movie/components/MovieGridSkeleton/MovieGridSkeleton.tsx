@@ -2,11 +2,11 @@ const SKELETON_COUNT = 10;
 
 export function MovieGridSkeleton() {
 	return (
-		<div className="grid grid-cols-5 gap-4">
+		<div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-5">
 			{Array.from({ length: SKELETON_COUNT }, (_, idx) => (
 				<div
 					key={`movie-skeleton-${idx}`}
-					className="aspect-video w-full animate-pulse rounded-xl bg-muted"
+					className="aspect-2/3 w-full animate-pulse rounded-xl bg-muted"
 				/>
 			))}
 		</div>

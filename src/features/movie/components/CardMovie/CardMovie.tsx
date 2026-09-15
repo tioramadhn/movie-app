@@ -10,10 +10,13 @@ export function CardMovie({ title, poster, releaseYear }: CardMovieProps) {
 			<img
 				src={poster ?? undefined}
 				alt={`poster of ${title}`}
-				className="relative z-20 aspect-auto w-full object-cover"
+				loading="lazy"
+				className="relative z-20 aspect-2/3 w-full bg-muted object-cover"
 			/>
-			<CardHeader className="px-4 space-y-2">
-				<CardTitle className="font-semibold">{title}</CardTitle>
+			<CardHeader className="px-3 space-y-2 sm:px-4">
+				<CardTitle className="text-sm font-semibold sm:text-base">
+					{title}
+				</CardTitle>
 				{releaseYear && (
 					<Badge className="text-xs" variant={"secondary"}>
 						{releaseYear}
