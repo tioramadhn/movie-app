@@ -10,9 +10,11 @@ export function CardMovie() {
 				alt="Event cover"
 				className="relative z-20 aspect-video w-full object-cover brightness-60 grayscale dark:brightness-40"
 			/>
-			<CardHeader>
-				<CardTitle>Design systems meetup</CardTitle>
-				<Badge variant={"secondary"}>2010</Badge>
+			<CardHeader className="px-4 space-y-2">
+				<CardTitle className="font-semibold">Design systems meetup</CardTitle>
+				<Badge className="text-xs" variant={"secondary"}>
+					2010
+				</Badge>
 			</CardHeader>
 		</Card>
 	);
