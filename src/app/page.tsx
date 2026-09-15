@@ -1,7 +1,7 @@
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { MovieList } from "@/features/movie/components/MovieList/MovieList";
 import { MovieSection } from "@/features/movie/components/MovieSection/MovieSection";
-import { MOVIE_CATALOG } from "@/features/movie/constant";
+import { getCategoryHref, MOVIE_CATALOG } from "@/features/movie/constant";
 import { movieListQueryOptions } from "@/features/movie/query";
 import { getQueryClient } from "@/lib/query-client";
 
@@ -18,7 +18,11 @@ export default function Home() {
 		<HydrationBoundary state={dehydrate(queryClient)}>
 			<div className="space-y-6">
 				{MOVIE_CATALOG.map((catalog) => (
-					<MovieSection key={catalog.key} title={catalog.title}>
+					<MovieSection
+						key={catalog.key}
+						title={catalog.title}
+						loadMoreHref={getCategoryHref(catalog.key)}
+					>
 						<MovieList category={catalog.key} />
 					</MovieSection>
 				))}

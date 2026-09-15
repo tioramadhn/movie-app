@@ -1,4 +1,7 @@
-import type { MovieCatalog } from "./schema";
+import type { MovieCatalog, MovieCategory } from "./schema";
+
+export const getCategoryHref = (category: MovieCategory) =>
+	`/category/${category}`;
 
 export const MOVIE_CATALOG: MovieCatalog[] = [
 	{

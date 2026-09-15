@@ -13,12 +13,14 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MOVIE_CATALOG } from "../../constant";
+import { getCategoryHref, MOVIE_CATALOG } from "../../constant";
 
 const ALL_CATEGORIES = "all";
 
-const getCategoryHref = (value: string) =>
-	value === ALL_CATEGORIES ? "/" : `/category/${value}`;
+const getFilterHref = (value: unknown) => {
+	const catalog = MOVIE_CATALOG.find((item) => item.key === value);
+	return catalog ? getCategoryHref(catalog.key) : "/";
+};
 
 const getActiveFilter = (pathname: string) => {
 	if (pathname === "/") return ALL_CATEGORIES;
@@ -47,9 +49,7 @@ export function CategoryFilter() {
 					<DropdownMenuLabel>Category</DropdownMenuLabel>
 					<DropdownMenuRadioGroup
 						value={getActiveFilter(pathname)}
-						onValueChange={(value) =>
-							router.push(getCategoryHref(String(value)))
-						}
+						onValueChange={(value) => router.push(getFilterHref(value))}
 					>
 						<DropdownMenuRadioItem value={ALL_CATEGORIES} closeOnClick>
 							All categories
