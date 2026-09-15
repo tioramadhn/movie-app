@@ -2,6 +2,7 @@ import { queryOptions } from "@tanstack/react-query";
 import {
 	getMovieNowPlayingList,
 	getMoviePopularList,
+	getMovieSearch,
 	getMovieTopRatedList,
 	getMovieUpcomingList,
 } from "./action";
@@ -18,4 +19,10 @@ export const movieListQueryOptions = (category: MovieCategory) =>
 	queryOptions({
 		queryKey: ["movies", "list", category],
 		queryFn: MOVIE_LIST_FETCHER[category],
+	});
+
+export const movieSearchQueryOptions = (query: string) =>
+	queryOptions({
+		queryKey: ["movies", "search", query],
+		queryFn: () => getMovieSearch(query),
 	});
