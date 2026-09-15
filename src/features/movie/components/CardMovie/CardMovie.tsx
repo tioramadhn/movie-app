@@ -1,19 +1,21 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import type { Movie } from "../../schema";
 
-export function CardMovie() {
+interface CardMovieProps extends Movie {}
+
+export function CardMovie({ title, poster, releaseYear }: CardMovieProps) {
 	return (
 		<Card className="relative mx-auto w-full max-w-sm pt-0">
-			<div className="absolute inset-0 z-30 aspect-video bg-black/35" />
 			<img
-				src="https://avatar.vercel.sh/shadcn1"
-				alt="Event cover"
-				className="relative z-20 aspect-video w-full object-cover brightness-60 grayscale dark:brightness-40"
+				src={poster ?? undefined}
+				alt={`poster of ${title}`}
+				className="relative z-20 aspect-auto w-full object-cover"
 			/>
 			<CardHeader className="px-4 space-y-2">
-				<CardTitle className="font-semibold">Design systems meetup</CardTitle>
+				<CardTitle className="font-semibold">{title}</CardTitle>
 				<Badge className="text-xs" variant={"secondary"}>
-					2010
+					{releaseYear}
 				</Badge>
 			</CardHeader>
 		</Card>

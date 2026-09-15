@@ -1,9 +1,16 @@
+export type MovieCategory =
+	| "now-playing"
+	| "popular"
+	| "top-rated"
+	| "upcoming";
+
 export interface MovieCatalog {
+	key: MovieCategory;
 	title: string;
-	handler: () => Promise<Movie[]>;
 }
 
 export type Movie = {
+	id: number;
 	poster: string | null;
 	title: string;
 	releaseYear: string;

@@ -1,72 +1,54 @@
-import { MOVIE } from "@/config/movie";
+import { IMAGE_BASE_URL, MOVIE } from "@/config/movie";
 import { apiManager } from "@/lib/api";
 import { buildPath } from "@/lib/utils";
 import type {
 	TMDBCreditsResponse,
+	TMDBMovie,
 	TMDBMovieDetailResponse,
 	TMDBMovieListResponse,
 } from "@/types/movie";
 import type { Movie, MovieDetail } from "./schema";
 
-export const getMovieNowPlayingList = async (): Promise<Movie[]> => {
-	const res = await apiManager.get<TMDBMovieListResponse>(MOVIE.NOW_PLAYING);
-	const movies: Movie[] = res.data.results.map((item) => ({
-		title: item.title,
-		releaseYear: item.release_date,
-		poster: item.poster_path,
-	}));
-	return movies;
+const toMovie = (
+	item: Pick<TMDBMovie, "id" | "title" | "release_date" | "poster_path">,
+): Movie => ({
+	id: item.id,
+	title: item.title,
+	releaseYear: item.release_date.slice(0, 4),
+	poster: item.poster_path ? `${IMAGE_BASE_URL}${item.poster_path}` : null,
+});
+
+const getMovieList = async (path: MOVIE): Promise<Movie[]> => {
+	const res = await apiManager.get<TMDBMovieListResponse>(path);
+	return res.data.results.map(toMovie);
 };
 
-export const getMovieTopRatedList = async (): Promise<Movie[]> => {
-	const res = await apiManager.get<TMDBMovieListResponse>(MOVIE.TOP_RATED);
-	const movies: Movie[] = res.data.results.map((item) => ({
-		title: item.title,
-		releaseYear: item.release_date,
-		poster: item.poster_path,
-	}));
-	return movies;
-};
+export const getMovieNowPlayingList = () => getMovieList(MOVIE.NOW_PLAYING);
 
-export const getMoviePopularList = async (): Promise<Movie[]> => {
-	const res = await apiManager.get<TMDBMovieListResponse>(MOVIE.POPULAR);
-	const movies: Movie[] = res.data.results.map((item) => ({
-		title: item.title,
-		releaseYear: item.release_date,
-		poster: item.poster_path,
-	}));
-	return movies;
-};
+export const getMovieTopRatedList = () => getMovieList(MOVIE.TOP_RATED);
 
-export const getMovieUpcomingList = async (): Promise<Movie[]> => {
-	const res = await apiManager.get<TMDBMovieListResponse>(MOVIE.UPCOMING);
-	const movies: Movie[] = res.data.results.map((item) => ({
-		title: item.title,
-		releaseYear: item.release_date,
-		poster: item.poster_path,
-	}));
-	return movies;
-};
+export const getMoviePopularList = () => getMovieList(MOVIE.POPULAR);
+
+export const getMovieUpcomingList = () => getMovieList(MOVIE.UPCOMING);
 
 export const getMovieDetails = async (
 	movieId: string,
 ): Promise<MovieDetail> => {
-	const { data: detail } = await apiManager.get<TMDBMovieDetailResponse>(
-		buildPath(MOVIE.DETAILS, { movie_id: movieId }),
-	);
-	const { data: credit } = await apiManager.get<TMDBCreditsResponse>(
-		buildPath(MOVIE.CREDITS, { movie_id: movieId }),
-	);
+	const [{ data: detail }, { data: credit }] = await Promise.all([
+		apiManager.get<TMDBMovieDetailResponse>(
+			buildPath(MOVIE.DETAILS, { movie_id: movieId }),
+		),
+		apiManager.get<TMDBCreditsResponse>(
+			buildPath(MOVIE.CREDITS, { movie_id: movieId }),
+		),
+	]);
 	return {
-		title: detail.title,
-		poster: detail.poster_path,
-		releaseYear: detail.release_date,
+		...toMovie(detail),
 		synopsis: detail.overview,
-		director:
-			credit.crew
-				.filter((item) => item.job === "Director")
-				.map((item) => item.name) || [],
-		mainCast: credit.cast.map((item) => item.name) || [],
+		director: credit.crew
+			.filter((item) => item.job === "Director")
+			.map((item) => item.name),
+		mainCast: credit.cast.map((item) => item.name),
 	};
 };
 
@@ -76,10 +58,5 @@ export const getMovieSearch = async (query: string): Promise<Movie[]> => {
 			query,
 		},
 	});
-	const movies: Movie[] = res.data.results.map((item) => ({
-		title: item.title,
-		releaseYear: item.release_date,
-		poster: item.poster_path,
-	}));
-	return movies;
+	return res.data.results.map(toMovie);
 };

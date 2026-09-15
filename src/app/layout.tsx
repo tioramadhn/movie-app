@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
+import { Providers } from "@/components/providers";
 import Header from "@/components/ui/header";
 import { cn } from "@/lib/utils";
 
@@ -35,8 +36,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
 			)}
 		>
 			<body className="min-h-full flex flex-col px-40 w-full gap-6">
-				<Header />
-				{children}
+				<Providers>
+					<Header />
+					{children}
+				</Providers>
 			</body>
 		</html>
 	);

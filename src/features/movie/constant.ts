@@ -1,26 +1,20 @@
-import {
-	getMovieNowPlayingList,
-	getMoviePopularList,
-	getMovieTopRatedList,
-	getMovieUpcomingList,
-} from "./action";
 import type { MovieCatalog } from "./schema";
 
 export const MOVIE_CATALOG: MovieCatalog[] = [
 	{
+		key: "now-playing",
 		title: "Now Playing",
-		handler: getMovieNowPlayingList,
 	},
 	{
+		key: "popular",
 		title: "Popular",
-		handler: getMoviePopularList,
 	},
 	{
+		key: "top-rated",
 		title: "Top Rated",
-		handler: getMovieTopRatedList,
 	},
 	{
+		key: "upcoming",
 		title: "Upcoming",
-		handler: getMovieUpcomingList,
 	},
 ];

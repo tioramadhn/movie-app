@@ -1,22 +1,29 @@
-import { CardMovie } from "@/features/movie/components/CardMovie/CardMovie";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { MovieSection } from "@/features/movie/components/MovieSection/MovieSection";
 import { MOVIE_CATALOG } from "@/features/movie/constant";
+import { movieListQueryOptions } from "@/features/movie/query";
+import { getQueryClient } from "@/lib/query-client";
+
+export const revalidate = 3600;
 
 export default function Home() {
+	const queryClient = getQueryClient();
+
+	for (const catalog of MOVIE_CATALOG) {
+		queryClient.query(movieListQueryOptions(catalog.key)).catch(() => {});
+	}
+
 	return (
-		<div className="space-y-6">
-			{MOVIE_CATALOG.map((item, index) => (
-				<div
-					key={`movie-catalog-${index}`}
-					className="flex flex-col gap-4 border rounded-2xl p-8"
-				>
-					<h1 className="font-semibold text-2xl">{item.title}</h1>
-					<div className="grid grid-cols-5 gap-4">
-						{[...new Array(10)].map((_item, idx) => (
-							<CardMovie key={idx} />
-						))}
-					</div>
-				</div>
-			))}
-		</div>
+		<HydrationBoundary state={dehydrate(queryClient)}>
+			<div className="space-y-6">
+				{MOVIE_CATALOG.map((catalog) => (
+					<MovieSection
+						key={catalog.key}
+						title={catalog.title}
+						category={catalog.key}
+					/>
+				))}
+			</div>
+		</HydrationBoundary>
 	);
 }

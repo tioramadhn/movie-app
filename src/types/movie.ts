@@ -11,7 +11,7 @@ interface TMDBDateRange {
 	minimum: string;
 }
 
-interface TMDBMovie {
+export interface TMDBMovie {
 	adult: boolean;
 	backdrop_path: string | null;
 	genre_ids: number[];
