@@ -1,10 +1,5 @@
 import { Badge } from "@/components/ui/badge";
-import {
-	Card,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function CardMovie() {
 	return (
@@ -18,10 +13,6 @@ export function CardMovie() {
 			<CardHeader>
 				<CardTitle>Design systems meetup</CardTitle>
 				<Badge variant={"secondary"}>2010</Badge>
-				<CardDescription>
-					A practical talk on component APIs, accessibility, and shipping
-					faster.
-				</CardDescription>
 			</CardHeader>
 		</Card>
 	);
