@@ -1,33 +1,31 @@
-import { Clapperboard, Funnel, Search } from "lucide-react";
+import { Clapperboard, Funnel } from "lucide-react";
+import Link from "next/link";
+import { Suspense } from "react";
+import {
+	SearchMovieForm,
+	SearchMovieFormFields,
+} from "@/features/movie/components/SearchMovieForm/SearchMovieForm";
 import { MOVIE_CATALOG } from "@/features/movie/constant";
 import { Button } from "./button";
-import { ButtonGroup } from "./button-group";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "./dropdown-menu";
-import { Input } from "./input";
 
 const Header = () => {
 	return (
 		<div className="font-bold text-2xl border p-4 rounded-2xl flex justify-between">
-			<div className="flex gap-2 items-center ">
+			<Link href="/" className="flex gap-2 items-center">
 				<Clapperboard />
 				Movie App
-			</div>
+			</Link>
 
 			<div className="flex gap-2 items-center">
-				<ButtonGroup>
-					<Input
-						id="input-button-group"
-						placeholder="Type to search a movie by title..."
-					/>
-					<Button variant="outline">
-						<Search />
-					</Button>
-				</ButtonGroup>
+				<Suspense fallback={<SearchMovieFormFields defaultQuery="" />}>
+					<SearchMovieForm />
+				</Suspense>
 
 				<DropdownMenu>
 					<DropdownMenuTrigger
