@@ -1,18 +1,11 @@
-import { Clapperboard, Funnel } from "lucide-react";
+import { Clapperboard } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
+import { CategoryFilter } from "@/features/movie/components/CategoryFilter/CategoryFilter";
 import {
 	SearchMovieForm,
 	SearchMovieFormFields,
 } from "@/features/movie/components/SearchMovieForm/SearchMovieForm";
-import { MOVIE_CATALOG } from "@/features/movie/constant";
-import { Button } from "./button";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from "./dropdown-menu";
 
 const Header = () => {
 	return (
@@ -27,22 +20,7 @@ const Header = () => {
 					<SearchMovieForm />
 				</Suspense>
 
-				<DropdownMenu>
-					<DropdownMenuTrigger
-						render={
-							<Button variant="outline">
-								<Funnel />
-							</Button>
-						}
-					/>
-					<DropdownMenuContent>
-						{MOVIE_CATALOG.map((item, idx) => (
-							<DropdownMenuItem key={`filter-${idx}`}>
-								{item.title}
-							</DropdownMenuItem>
-						))}
-					</DropdownMenuContent>
-				</DropdownMenu>
+				<CategoryFilter />
 			</div>
 		</div>
 	);
