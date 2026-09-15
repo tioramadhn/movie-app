@@ -1,4 +1,9 @@
-import { IMAGE_BASE_URL, MOVIE, TMDB_MAX_PAGE } from "@/config/movie";
+import {
+	IMAGE_BASE_URL,
+	MOVIE,
+	PROFILE_IMAGE_BASE_URL,
+	TMDB_MAX_PAGE,
+} from "@/config/movie";
 import { apiManager } from "@/lib/api";
 import { buildPath } from "@/lib/utils";
 import type {
@@ -7,7 +12,9 @@ import type {
 	TMDBMovieDetailResponse,
 	TMDBMovieListResponse,
 } from "@/types/movie";
-import type { Movie, MovieDetail, MoviePage } from "./schema";
+import type { Movie, MovieCastMember, MovieDetail, MoviePage } from "./schema";
+
+const MAIN_CAST_LIMIT = 10;
 
 const toMovie = (
 	item: Pick<TMDBMovie, "id" | "title" | "release_date" | "poster_path">,
@@ -23,6 +30,19 @@ const toMoviePage = (data: TMDBMovieListResponse): MoviePage => ({
 	page: data.page,
 	totalPages: Math.min(data.total_pages, TMDB_MAX_PAGE),
 });
+
+const toMainCast = (cast: TMDBCreditsResponse["cast"]): MovieCastMember[] =>
+	[...cast]
+		.sort((a, b) => a.order - b.order)
+		.slice(0, MAIN_CAST_LIMIT)
+		.map((member) => ({
+			creditId: member.credit_id,
+			name: member.name,
+			character: member.character,
+			profile: member.profile_path
+				? `${PROFILE_IMAGE_BASE_URL}${member.profile_path}`
+				: null,
+		}));
 
 const getMovieList = async (path: MOVIE, page = 1): Promise<MoviePage> => {
 	const res = await apiManager.get<TMDBMovieListResponse>(path, {
@@ -44,7 +64,7 @@ export const getMovieUpcomingList = (page = 1) =>
 	getMovieList(MOVIE.UPCOMING, page);
 
 export const getMovieDetails = async (
-	movieId: string,
+	movieId: number,
 ): Promise<MovieDetail> => {
 	const [{ data: detail }, { data: credit }] = await Promise.all([
 		apiManager.get<TMDBMovieDetailResponse>(
@@ -57,10 +77,18 @@ export const getMovieDetails = async (
 	return {
 		...toMovie(detail),
 		synopsis: detail.overview,
-		director: credit.crew
-			.filter((item) => item.job === "Director")
-			.map((item) => item.name),
-		mainCast: credit.cast.map((item) => item.name),
+		tagline: detail.tagline || null,
+		genres: detail.genres.map((genre) => genre.name),
+		runtime: detail.runtime || null,
+		rating: detail.vote_average,
+		director: [
+			...new Set(
+				credit.crew
+					.filter((item) => item.job === "Director")
+					.map((item) => item.name),
+			),
+		],
+		mainCast: toMainCast(credit.cast),
 	};
 };
 

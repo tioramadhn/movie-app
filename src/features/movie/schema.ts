@@ -24,9 +24,20 @@ export type MoviePage = {
 	totalPages: number;
 };
 
+export type MovieCastMember = {
+	creditId: string;
+	name: string;
+	character: string;
+	profile: string | null;
+};
+
 export type MovieDetail = Movie & {
 	synopsis: string;
-	mainCast: string[];
+	tagline: string | null;
+	genres: string[];
+	runtime: number | null;
+	rating: number;
+	mainCast: MovieCastMember[];
 	director: string[];
 };
 
