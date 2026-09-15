@@ -21,7 +21,7 @@ export interface TMDBMovie {
 	overview: string;
 	popularity: number;
 	poster_path: string | null;
-	release_date: string;
+	release_date?: string;
 	title: string;
 	video: boolean;
 	vote_average: number;

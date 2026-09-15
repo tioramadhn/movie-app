@@ -15,7 +15,7 @@ export type Movie = {
 	id: number;
 	poster: string | null;
 	title: string;
-	releaseYear: string;
+	releaseYear: string | null;
 };
 
 export type MoviePage = {

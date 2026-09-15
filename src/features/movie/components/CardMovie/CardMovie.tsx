@@ -14,9 +14,11 @@ export function CardMovie({ title, poster, releaseYear }: CardMovieProps) {
 			/>
 			<CardHeader className="px-4 space-y-2">
 				<CardTitle className="font-semibold">{title}</CardTitle>
-				<Badge className="text-xs" variant={"secondary"}>
-					{releaseYear}
-				</Badge>
+				{releaseYear && (
+					<Badge className="text-xs" variant={"secondary"}>
+						{releaseYear}
+					</Badge>
+				)}
 			</CardHeader>
 		</Card>
 	);

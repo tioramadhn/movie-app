@@ -14,7 +14,7 @@ const toMovie = (
 ): Movie => ({
 	id: item.id,
 	title: item.title,
-	releaseYear: item.release_date.slice(0, 4),
+	releaseYear: item.release_date?.slice(0, 4) || null,
 	poster: item.poster_path ? `${IMAGE_BASE_URL}${item.poster_path}` : null,
 });
 
