@@ -1,4 +1,4 @@
-import { IMAGE_BASE_URL, MOVIE } from "@/config/movie";
+import { IMAGE_BASE_URL, MOVIE, TMDB_MAX_PAGE } from "@/config/movie";
 import { apiManager } from "@/lib/api";
 import { buildPath } from "@/lib/utils";
 import type {
@@ -7,7 +7,7 @@ import type {
 	TMDBMovieDetailResponse,
 	TMDBMovieListResponse,
 } from "@/types/movie";
-import type { Movie, MovieDetail } from "./schema";
+import type { Movie, MovieDetail, MoviePage } from "./schema";
 
 const toMovie = (
 	item: Pick<TMDBMovie, "id" | "title" | "release_date" | "poster_path">,
@@ -18,18 +18,30 @@ const toMovie = (
 	poster: item.poster_path ? `${IMAGE_BASE_URL}${item.poster_path}` : null,
 });
 
-const getMovieList = async (path: MOVIE): Promise<Movie[]> => {
-	const res = await apiManager.get<TMDBMovieListResponse>(path);
-	return res.data.results.map(toMovie);
+const toMoviePage = (data: TMDBMovieListResponse): MoviePage => ({
+	movies: data.results.map(toMovie),
+	page: data.page,
+	totalPages: Math.min(data.total_pages, TMDB_MAX_PAGE),
+});
+
+const getMovieList = async (path: MOVIE, page = 1): Promise<MoviePage> => {
+	const res = await apiManager.get<TMDBMovieListResponse>(path, {
+		params: { page },
+	});
+	return toMoviePage(res.data);
 };
 
-export const getMovieNowPlayingList = () => getMovieList(MOVIE.NOW_PLAYING);
+export const getMovieNowPlayingList = (page = 1) =>
+	getMovieList(MOVIE.NOW_PLAYING, page);
 
-export const getMovieTopRatedList = () => getMovieList(MOVIE.TOP_RATED);
+export const getMovieTopRatedList = (page = 1) =>
+	getMovieList(MOVIE.TOP_RATED, page);
 
-export const getMoviePopularList = () => getMovieList(MOVIE.POPULAR);
+export const getMoviePopularList = (page = 1) =>
+	getMovieList(MOVIE.POPULAR, page);
 
-export const getMovieUpcomingList = () => getMovieList(MOVIE.UPCOMING);
+export const getMovieUpcomingList = (page = 1) =>
+	getMovieList(MOVIE.UPCOMING, page);
 
 export const getMovieDetails = async (
 	movieId: string,
@@ -52,11 +64,15 @@ export const getMovieDetails = async (
 	};
 };
 
-export const getMovieSearch = async (query: string): Promise<Movie[]> => {
+export const getMovieSearch = async (
+	query: string,
+	page = 1,
+): Promise<MoviePage> => {
 	const res = await apiManager.get<TMDBMovieListResponse>(MOVIE.SEARCH, {
 		params: {
 			query,
+			page,
 		},
 	});
-	return res.data.results.map(toMovie);
+	return toMoviePage(res.data);
 };

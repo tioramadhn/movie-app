@@ -6,7 +6,7 @@ import type { MovieCategory } from "../../schema";
 import { MovieGrid } from "../MovieGrid/MovieGrid";
 
 export function MovieList({ category }: { category: MovieCategory }) {
-	const { data: movies } = useSuspenseQuery(movieListQueryOptions(category));
+	const { data } = useSuspenseQuery(movieListQueryOptions(category));
 
-	return <MovieGrid movies={movies} />;
+	return <MovieGrid movies={data.movies} />;
 }

@@ -1,9 +1,7 @@
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { Suspense } from "react";
-import { MovieGridSkeleton } from "@/features/movie/components/MovieGridSkeleton/MovieGridSkeleton";
-import { MovieListErrorBoundary } from "@/features/movie/components/MovieListError/MovieListError";
+import { MovieSection } from "@/features/movie/components/MovieSection/MovieSection";
 import { SearchResults } from "@/features/movie/components/SearchResults/SearchResults";
-import { movieSearchQueryOptions } from "@/features/movie/query";
+import { movieSearchInfiniteQueryOptions } from "@/features/movie/query";
 import { searchMovieSchema } from "@/features/movie/schema";
 import { getQueryClient } from "@/lib/query-client";
 
@@ -43,18 +41,15 @@ export default async function SearchPage({
 
 	const { query } = result.data;
 	const queryClient = getQueryClient();
-	queryClient.query(movieSearchQueryOptions(query)).catch(() => {});
+	queryClient
+		.infiniteQuery(movieSearchInfiniteQueryOptions(query))
+		.catch(() => {});
 
 	return (
 		<HydrationBoundary state={dehydrate(queryClient)}>
-			<section className="flex flex-col gap-4 border rounded-2xl p-8">
-				<h1 className="font-semibold text-2xl">{`Results for "${query}"`}</h1>
-				<MovieListErrorBoundary key={query}>
-					<Suspense fallback={<MovieGridSkeleton />}>
-						<SearchResults query={query} />
-					</Suspense>
-				</MovieListErrorBoundary>
-			</section>
+			<MovieSection key={query} title={`Results for "${query}"`}>
+				<SearchResults query={query} />
+			</MovieSection>
 		</HydrationBoundary>
 	);
 }

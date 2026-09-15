@@ -18,6 +18,12 @@ export type Movie = {
 	releaseYear: string;
 };
 
+export type MoviePage = {
+	movies: Movie[];
+	page: number;
+	totalPages: number;
+};
+
 export type MovieDetail = Movie & {
 	synopsis: string;
 	mainCast: string[];

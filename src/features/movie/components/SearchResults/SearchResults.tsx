@@ -1,15 +1,17 @@
 "use client";
 
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { movieSearchQueryOptions } from "../../query";
-import { MovieGrid } from "../MovieGrid/MovieGrid";
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
+import { movieSearchInfiniteQueryOptions } from "../../query";
+import { InfiniteMovieGrid } from "../InfiniteMovieGrid/InfiniteMovieGrid";
 
 export function SearchResults({ query }: { query: string }) {
-	const { data: movies } = useSuspenseQuery(movieSearchQueryOptions(query));
+	const searchQuery = useSuspenseInfiniteQuery(
+		movieSearchInfiniteQueryOptions(query),
+	);
 
 	return (
-		<MovieGrid
-			movies={movies}
+		<InfiniteMovieGrid
+			query={searchQuery}
 			emptyMessage={`No movies found for "${query}".`}
 		/>
 	);
