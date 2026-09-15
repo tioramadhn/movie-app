@@ -43,6 +43,7 @@ export function SearchMovieFormFields({
 				<Input
 					type="search"
 					placeholder="Type to search a movie by title..."
+					className="w-[300px]"
 					{...register("query")}
 				/>
 				<Button type="submit" variant="outline" aria-label="Search">
