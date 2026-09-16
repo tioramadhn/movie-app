@@ -6,6 +6,7 @@ import {
 	MovieSection,
 	movieListQueryOptions,
 } from "@/features/movie";
+import { serverMovieFetcher } from "@/features/movie/movie.service";
 import { getQueryClient } from "@/lib/query-client";
 
 export const revalidate = 3600;
@@ -14,7 +15,9 @@ export default function Home() {
 	const queryClient = getQueryClient();
 
 	for (const catalog of MOVIE_CATALOG) {
-		queryClient.query(movieListQueryOptions(catalog.key)).catch(() => {});
+		queryClient
+			.query(movieListQueryOptions(catalog.key, serverMovieFetcher))
+			.catch(() => {});
 	}
 
 	return (

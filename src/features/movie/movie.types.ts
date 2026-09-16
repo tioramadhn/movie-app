@@ -25,6 +25,11 @@ export type MoviePage = {
 	totalPages: number;
 };
 
+export type MovieFetcher = {
+	list: (category: MovieCategory, page: number) => Promise<MoviePage>;
+	search: (query: string, page: number) => Promise<MoviePage>;
+};
+
 export type MovieCastMember = {
 	creditId: string;
 	name: string;

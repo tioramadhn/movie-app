@@ -6,7 +6,12 @@ import type {
 	TMDBMovieDetailResponse,
 	TMDBMovieListResponse,
 } from "@/types/movie";
-import type { MovieDetail, MoviePage } from "./movie.types";
+import type {
+	MovieCategory,
+	MovieDetail,
+	MovieFetcher,
+	MoviePage,
+} from "./movie.types";
 import { toMainCast, toMovie, toMoviePage } from "./movie.utils";
 
 const getMovieList = async (path: MOVIE, page = 1): Promise<MoviePage> => {
@@ -68,4 +73,19 @@ export const getMovieSearch = async (
 		},
 	});
 	return toMoviePage(res.data);
+};
+
+const MOVIE_LIST_FETCHER: Record<
+	MovieCategory,
+	(page: number) => Promise<MoviePage>
+> = {
+	"now-playing": getMovieNowPlayingList,
+	popular: getMoviePopularList,
+	"top-rated": getMovieTopRatedList,
+	upcoming: getMovieUpcomingList,
+};
+
+export const serverMovieFetcher: MovieFetcher = {
+	list: (category, page) => MOVIE_LIST_FETCHER[category](page),
+	search: (query, page) => getMovieSearch(query, page),
 };

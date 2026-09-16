@@ -6,6 +6,7 @@ import {
 	MovieSection,
 	movieListInfiniteQueryOptions,
 } from "@/features/movie";
+import { serverMovieFetcher } from "@/features/movie/movie.service";
 import { getQueryClient } from "@/lib/query-client";
 
 export const revalidate = 3600;
@@ -28,7 +29,9 @@ export default async function CategoryPage({
 
 	const queryClient = getQueryClient();
 	queryClient
-		.infiniteQuery(movieListInfiniteQueryOptions(catalog.key))
+		.infiniteQuery(
+			movieListInfiniteQueryOptions(catalog.key, serverMovieFetcher),
+		)
 		.catch(() => {});
 
 	return (

@@ -5,6 +5,7 @@ import {
 	SearchResults,
 	searchMovieSchema,
 } from "@/features/movie";
+import { serverMovieFetcher } from "@/features/movie/movie.service";
 import { getQueryClient } from "@/lib/query-client";
 
 function SearchMessage({ title, message }: { title: string; message: string }) {
@@ -44,7 +45,7 @@ export default async function SearchPage({
 	const { query } = result.data;
 	const queryClient = getQueryClient();
 	queryClient
-		.infiniteQuery(movieSearchInfiniteQueryOptions(query))
+		.infiniteQuery(movieSearchInfiniteQueryOptions(query, serverMovieFetcher))
 		.catch(() => {});
 
 	return (
