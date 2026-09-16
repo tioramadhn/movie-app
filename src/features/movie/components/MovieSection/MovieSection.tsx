@@ -22,7 +22,7 @@ export function MovieSection({
 							className={buttonVariants({ variant: "outline" })}
 						>
 							<span className="flex items-center gap-2">
-								Load more <ChevronRight />
+								See more <ChevronRight />
 							</span>
 						</Link>
 					</div>
