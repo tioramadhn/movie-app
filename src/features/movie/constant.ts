@@ -3,6 +3,8 @@ import type { MovieCatalog, MovieCategory } from "./schema";
 export const getCategoryHref = (category: MovieCategory) =>
 	`/category/${category}`;
 
+export const getMovieHref = (id: number) => `/movie/${id}`;
+
 export const MOVIE_CATALOG: MovieCatalog[] = [
 	{
 		key: "now-playing",
