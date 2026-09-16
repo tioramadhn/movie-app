@@ -1,19 +1,15 @@
-import { Clapperboard } from "lucide-react";
-import Link from "next/link";
 import { Suspense } from "react";
 import {
 	CategoryFilter,
 	SearchMovieForm,
 	SearchMovieFormFields,
 } from "@/features/movie";
+import { HomeLink } from "./home-link";
 
 const Header = () => {
 	return (
 		<div className="sticky top-0 z-40 font-bold text-xl border bg-background p-4 rounded-b-2xl flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:text-2xl">
-			<Link href="/" className="flex gap-2 items-center">
-				<Clapperboard />
-				Movie App
-			</Link>
+			<HomeLink />
 
 			<div className="flex gap-2 items-center w-full sm:w-auto">
 				<Suspense fallback={<SearchMovieFormFields defaultQuery="" />}>
