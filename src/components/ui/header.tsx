@@ -9,7 +9,7 @@ import {
 
 const Header = () => {
 	return (
-		<div className="font-bold text-xl border p-4 rounded-2xl flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:text-2xl">
+		<div className="sticky top-0 z-40 font-bold text-xl border bg-background p-4 rounded-b-2xl flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:text-2xl">
 			<Link href="/" className="flex gap-2 items-center">
 				<Clapperboard />
 				Movie App
