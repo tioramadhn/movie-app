@@ -41,6 +41,8 @@ export type MovieDetail = Movie & {
 	director: string[];
 };
 
+export const movieIdSchema = z.coerce.number().int().positive();
+
 export const SEARCH_QUERY_MAX_LENGTH = 100;
 
 const SEARCH_QUERY_ALLOWED_PATTERN =
