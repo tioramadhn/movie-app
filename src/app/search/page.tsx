@@ -46,7 +46,9 @@ export default async function SearchPage({
 	const queryClient = getQueryClient();
 	queryClient
 		.infiniteQuery(movieSearchInfiniteQueryOptions(query, serverMovieFetcher))
-		.catch(() => {});
+		.catch((error) => {
+			console.error(`Failed to prefetch search results for "${query}"`, error);
+		});
 
 	return (
 		<HydrationBoundary state={dehydrate(queryClient)}>

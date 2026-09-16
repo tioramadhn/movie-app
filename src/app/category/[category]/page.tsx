@@ -32,7 +32,9 @@ export default async function CategoryPage({
 		.infiniteQuery(
 			movieListInfiniteQueryOptions(catalog.key, serverMovieFetcher),
 		)
-		.catch(() => {});
+		.catch((error) => {
+			console.error(`Failed to prefetch "${catalog.key}" movies`, error);
+		});
 
 	return (
 		<HydrationBoundary state={dehydrate(queryClient)}>

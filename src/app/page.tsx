@@ -17,7 +17,9 @@ export default function Home() {
 	for (const catalog of MOVIE_CATALOG) {
 		queryClient
 			.query(movieListQueryOptions(catalog.key, serverMovieFetcher))
-			.catch(() => {});
+			.catch((error) => {
+				console.error(`Failed to prefetch "${catalog.key}" movies`, error);
+			});
 	}
 
 	return (
