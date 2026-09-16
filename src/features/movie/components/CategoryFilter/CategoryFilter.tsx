@@ -13,23 +13,9 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { getCategoryHref, MOVIE_CATALOG } from "../../constant";
-
-const ALL_CATEGORIES = "all";
-
-const getFilterHref = (value: unknown) => {
-	const catalog = MOVIE_CATALOG.find((item) => item.key === value);
-	return catalog ? getCategoryHref(catalog.key) : "/";
-};
-
-const getActiveFilter = (pathname: string) => {
-	if (pathname === "/") return ALL_CATEGORIES;
-
-	return (
-		MOVIE_CATALOG.find((catalog) => getCategoryHref(catalog.key) === pathname)
-			?.key ?? null
-	);
-};
+import { MOVIE_CATALOG } from "../../movie.constant";
+import { ALL_CATEGORIES } from "./CategoryFilter.constant";
+import { getActiveFilter, getFilterHref } from "./CategoryFilter.utils";
 
 export function CategoryFilter() {
 	const pathname = usePathname();

@@ -1,8 +1,10 @@
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { MovieSection } from "@/features/movie/components/MovieSection/MovieSection";
-import { SearchResults } from "@/features/movie/components/SearchResults/SearchResults";
-import { movieSearchInfiniteQueryOptions } from "@/features/movie/query";
-import { searchMovieSchema } from "@/features/movie/schema";
+import {
+	MovieSection,
+	movieSearchInfiniteQueryOptions,
+	SearchResults,
+	searchMovieSchema,
+} from "@/features/movie";
 import { getQueryClient } from "@/lib/query-client";
 
 function SearchMessage({ title, message }: { title: string; message: string }) {

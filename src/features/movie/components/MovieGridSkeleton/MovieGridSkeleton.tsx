@@ -1,4 +1,4 @@
-const SKELETON_COUNT = 10;
+import { SKELETON_COUNT } from "./MovieGridSkeleton.constant";
 
 export function MovieGridSkeleton() {
 	return (

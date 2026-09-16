@@ -1,10 +1,8 @@
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { getMovieHref } from "../../constant";
-import type { Movie } from "../../schema";
-
-interface CardMovieProps extends Movie {}
+import { getMovieHref } from "../../movie.utils";
+import type { CardMovieProps } from "./CardMovie.types";
 
 export function CardMovie({ id, title, poster, releaseYear }: CardMovieProps) {
 	return (

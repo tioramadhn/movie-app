@@ -1,4 +1,5 @@
-import { z } from "zod";
+import type { z } from "zod";
+import type { searchMovieSchema } from "./movie.schema";
 
 export type MovieCategory =
 	| "now-playing"
@@ -40,27 +41,5 @@ export type MovieDetail = Movie & {
 	mainCast: MovieCastMember[];
 	director: string[];
 };
-
-export const movieIdSchema = z.coerce.number().int().positive();
-
-export const SEARCH_QUERY_MAX_LENGTH = 100;
-
-const SEARCH_QUERY_ALLOWED_PATTERN =
-	/^[\p{L}\p{M}\p{N} .,:;'"!?&()/·*#$%+@-]+$/u;
-
-export const searchMovieSchema = z.object({
-	query: z
-		.string({ error: "Please enter a movie title." })
-		.trim()
-		.min(1, "Please enter a movie title.")
-		.max(
-			SEARCH_QUERY_MAX_LENGTH,
-			`Movie title must be at most ${SEARCH_QUERY_MAX_LENGTH} characters.`,
-		)
-		.regex(
-			SEARCH_QUERY_ALLOWED_PATTERN,
-			"Movie title contains characters that are not allowed.",
-		),
-});
 
 export type SearchMovieFormValues = z.infer<typeof searchMovieSchema>;

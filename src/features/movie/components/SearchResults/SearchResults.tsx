@@ -1,10 +1,11 @@
 "use client";
 
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
-import { movieSearchInfiniteQueryOptions } from "../../query";
-import { InfiniteMovieGrid } from "../InfiniteMovieGrid/InfiniteMovieGrid";
+import { movieSearchInfiniteQueryOptions } from "../../movie.query";
+import { InfiniteMovieGrid } from "../InfiniteMovieGrid";
+import type { SearchResultsProps } from "./SearchResults.types";
 
-export function SearchResults({ query }: { query: string }) {
+export function SearchResults({ query }: SearchResultsProps) {
 	const searchQuery = useSuspenseInfiniteQuery(
 		movieSearchInfiniteQueryOptions(query),
 	);

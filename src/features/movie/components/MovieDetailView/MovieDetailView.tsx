@@ -1,14 +1,9 @@
 import { Clock, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import type { MovieDetail } from "../../schema";
+import type { MovieDetailViewProps } from "./MovieDetailView.types";
+import { formatRuntime } from "./MovieDetailView.utils";
 
-const formatRuntime = (minutes: number) => {
-	const hours = Math.floor(minutes / 60);
-	const remainingMinutes = minutes % 60;
-	return hours > 0 ? `${hours}h ${remainingMinutes}m` : `${remainingMinutes}m`;
-};
-
-export function MovieDetailView({ movie }: { movie: MovieDetail }) {
+export function MovieDetailView({ movie }: MovieDetailViewProps) {
 	return (
 		<article className="flex flex-col gap-6 border rounded-2xl p-4 sm:p-8 md:flex-row md:gap-10">
 			<img

@@ -8,7 +8,9 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Input } from "@/components/ui/input";
-import { type SearchMovieFormValues, searchMovieSchema } from "../../schema";
+import { searchMovieSchema } from "../../movie.schema";
+import type { SearchMovieFormValues } from "../../movie.types";
+import type { SearchMovieFormFieldsProps } from "./SearchMovieForm.types";
 
 export function SearchMovieForm() {
 	const searchParams = useSearchParams();
@@ -19,9 +21,7 @@ export function SearchMovieForm() {
 
 export function SearchMovieFormFields({
 	defaultQuery,
-}: {
-	defaultQuery: string;
-}) {
+}: SearchMovieFormFieldsProps) {
 	const router = useRouter();
 	const errorId = useId();
 	const {

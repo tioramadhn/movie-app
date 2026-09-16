@@ -1,40 +1,13 @@
 "use client";
 
-import type {
-	InfiniteData,
-	UseSuspenseInfiniteQueryResult,
-} from "@tanstack/react-query";
 import { LoaderCircle } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import type { Movie, MoviePage } from "../../schema";
-import { MovieGrid } from "../MovieGrid/MovieGrid";
-import { MovieGridSkeleton } from "../MovieGridSkeleton/MovieGridSkeleton";
-
-const AUTO_LOAD_ROOT_MARGIN = "0px 0px 600px 0px";
-
-interface InfiniteMovieGridProps {
-	query: UseSuspenseInfiniteQueryResult<InfiniteData<MoviePage>>;
-	emptyMessage?: string;
-}
-
-const getUniqueMovies = (pages: MoviePage[]): Movie[] => {
-	const seenIds = new Set<number>();
-
-	return pages
-		.flatMap((page) => page.movies)
-		.filter((movie) => {
-			if (seenIds.has(movie.id)) return false;
-			seenIds.add(movie.id);
-			return true;
-		});
-};
-
-const getLoadMoreLabel = (isLoading: boolean, hasError: boolean) => {
-	if (isLoading) return "Loading more movies...";
-	if (hasError) return "Try again";
-	return "Load more movies";
-};
+import { MovieGrid } from "../MovieGrid";
+import { MovieGridSkeleton } from "../MovieGridSkeleton";
+import { AUTO_LOAD_ROOT_MARGIN } from "./InfiniteMovieGrid.constant";
+import type { InfiniteMovieGridProps } from "./InfiniteMovieGrid.types";
+import { getLoadMoreLabel, getUniqueMovies } from "./InfiniteMovieGrid.utils";
 
 export function InfiniteMovieGrid({
 	query,

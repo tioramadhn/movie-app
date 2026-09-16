@@ -1,15 +1,10 @@
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { type ReactNode, Suspense } from "react";
+import { Suspense } from "react";
 import { buttonVariants } from "@/components/ui/button";
-import { MovieGridSkeleton } from "../MovieGridSkeleton/MovieGridSkeleton";
-import { MovieListErrorBoundary } from "../MovieListError/MovieListError";
-
-interface MovieSectionProps {
-	title: string;
-	children: ReactNode;
-	loadMoreHref?: string;
-}
+import { MovieGridSkeleton } from "../MovieGridSkeleton";
+import { MovieListErrorBoundary } from "../MovieListError";
+import type { MovieSectionProps } from "./MovieSection.types";
 
 export function MovieSection({
 	title,

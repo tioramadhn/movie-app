@@ -1,11 +1,11 @@
 import { Clapperboard } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
-import { CategoryFilter } from "@/features/movie/components/CategoryFilter/CategoryFilter";
 import {
+	CategoryFilter,
 	SearchMovieForm,
 	SearchMovieFormFields,
-} from "@/features/movie/components/SearchMovieForm/SearchMovieForm";
+} from "@/features/movie";
 
 const Header = () => {
 	return (

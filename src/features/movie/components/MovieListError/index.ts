@@ -1,0 +1,1 @@
+export { MovieListErrorBoundary } from "./MovieListError";

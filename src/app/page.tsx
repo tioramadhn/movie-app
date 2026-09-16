@@ -1,8 +1,11 @@
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { MovieList } from "@/features/movie/components/MovieList/MovieList";
-import { MovieSection } from "@/features/movie/components/MovieSection/MovieSection";
-import { getCategoryHref, MOVIE_CATALOG } from "@/features/movie/constant";
-import { movieListQueryOptions } from "@/features/movie/query";
+import {
+	getCategoryHref,
+	MOVIE_CATALOG,
+	MovieList,
+	MovieSection,
+	movieListQueryOptions,
+} from "@/features/movie";
 import { getQueryClient } from "@/lib/query-client";
 
 export const revalidate = 3600;

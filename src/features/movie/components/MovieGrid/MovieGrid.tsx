@@ -1,14 +1,10 @@
-import type { Movie } from "../../schema";
-import { CardMovie } from "../CardMovie/CardMovie";
-
-interface MovieGridProps {
-	movies: Movie[];
-	emptyMessage?: string;
-}
+import { CardMovie } from "../CardMovie";
+import { DEFAULT_EMPTY_MESSAGE } from "./MovieGrid.constant";
+import type { MovieGridProps } from "./MovieGrid.types";
 
 export function MovieGrid({
 	movies,
-	emptyMessage = "No movies found.",
+	emptyMessage = DEFAULT_EMPTY_MESSAGE,
 }: MovieGridProps) {
 	if (movies.length === 0) {
 		return <p className="text-sm text-muted-foreground">{emptyMessage}</p>;

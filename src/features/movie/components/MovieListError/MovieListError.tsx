@@ -3,8 +3,9 @@
 import { useQueryErrorResetBoundary } from "@tanstack/react-query";
 import { catchError, type ErrorInfo } from "next/error";
 import { Button } from "@/components/ui/button";
+import type { RetryButtonProps } from "./MovieListError.types";
 
-function RetryButton({ onRetry }: { onRetry: () => void }) {
+function RetryButton({ onRetry }: RetryButtonProps) {
 	const { reset: resetQueries } = useQueryErrorResetBoundary();
 
 	return (

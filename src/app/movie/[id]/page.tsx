@@ -2,9 +2,11 @@ import { isAxiosError } from "axios";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
-import { getMovieDetails } from "@/features/movie/action";
-import { MovieDetailView } from "@/features/movie/components/MovieDetailView/MovieDetailView";
-import { movieIdSchema } from "@/features/movie/schema";
+import {
+	getMovieDetails,
+	MovieDetailView,
+	movieIdSchema,
+} from "@/features/movie";
 
 export const revalidate = 3600;
 
