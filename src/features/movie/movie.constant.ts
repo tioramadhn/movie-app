@@ -1,10 +1,4 @@
-import {
-	getMovieNowPlayingList,
-	getMoviePopularList,
-	getMovieTopRatedList,
-	getMovieUpcomingList,
-} from "./movie.service";
-import type { MovieCatalog, MovieCategory, MoviePage } from "./movie.types";
+import type { MovieCatalog } from "./movie.types";
 
 export const MAIN_CAST_LIMIT = 10;
 
@@ -31,13 +25,3 @@ export const MOVIE_CATALOG: MovieCatalog[] = [
 		title: "Upcoming",
 	},
 ];
-
-export const MOVIE_LIST_FETCHER: Record<
-	MovieCategory,
-	(page: number) => Promise<MoviePage>
-> = {
-	"now-playing": getMovieNowPlayingList,
-	popular: getMoviePopularList,
-	"top-rated": getMovieTopRatedList,
-	upcoming: getMovieUpcomingList,
-};

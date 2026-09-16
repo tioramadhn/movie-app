@@ -1,8 +1,23 @@
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
-import { MOVIE_LIST_FETCHER } from "./movie.constant";
-import { getMovieSearch } from "./movie.service";
-import type { MovieCategory } from "./movie.types";
+import {
+	getMovieNowPlayingList,
+	getMoviePopularList,
+	getMovieSearch,
+	getMovieTopRatedList,
+	getMovieUpcomingList,
+} from "./movie.service";
+import type { MovieCategory, MoviePage } from "./movie.types";
 import { getNextPageParam } from "./movie.utils";
+
+export const MOVIE_LIST_FETCHER: Record<
+	MovieCategory,
+	(page: number) => Promise<MoviePage>
+> = {
+	"now-playing": getMovieNowPlayingList,
+	popular: getMoviePopularList,
+	"top-rated": getMovieTopRatedList,
+	upcoming: getMovieUpcomingList,
+};
 
 export const movieListQueryOptions = (category: MovieCategory) =>
 	queryOptions({
